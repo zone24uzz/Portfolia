@@ -50,39 +50,46 @@ body {
   background: linear-gradient(180deg, #00d4ff, #a855f7);
 }
 
-/* Custom Cursor */
-.cursor {
-  width: 12px;
-  height: 12px;
-  background: #00d4ff;
-  border-radius: 50%;
+/* Custom Cursor — neon diamond */
+.cursor-diamond {
+  width: 11px;
+  height: 11px;
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.1s ease;
-  box-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: linear-gradient(135deg, #00d4ff, #7c3aed);
+  box-shadow:
+    0 0 6px #00d4ff,
+    0 0 14px rgba(0, 212, 255, 0.7),
+    0 0 28px rgba(124, 58, 237, 0.4);
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  will-change: left, top;
 }
 
-.cursor-follower {
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(0, 212, 255, 0.4);
-  border-radius: 50%;
+.cursor-diamond.cursor-hover {
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #a855f7, #00d4ff);
+  box-shadow:
+    0 0 10px #a855f7,
+    0 0 24px rgba(168, 85, 247, 0.8),
+    0 0 48px rgba(0, 212, 255, 0.3);
+}
+
+.cursor-trail {
+  width: 7px;
+  height: 7px;
   position: fixed;
   pointer-events: none;
-  z-index: 9998;
-  transition: all 0.15s ease;
-}
-
-.cursor.hover {
-  transform: scale(2);
-  background: #a855f7;
-  box-shadow: 0 0 15px #a855f7, 0 0 30px #a855f7;
-}
-
-.cursor-follower.hover {
-  transform: scale(1.5);
-  border-color: rgba(168, 85, 247, 0.6);
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: linear-gradient(135deg, #00d4ff, #7c3aed);
+  filter: blur(1px);
+  will-change: left, top, opacity;
 }
 
 /* Glassmorphism */
