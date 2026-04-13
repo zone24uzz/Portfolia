@@ -111,7 +111,7 @@ export default function Projects() {
               <div style={{ padding: '2rem' }}>
                 <h3 className="font-bold text-white" style={{ fontSize: '1.25rem', marginBottom: '0.75rem' }}>{project.title}</h3>
                 <p className="text-slate-400 leading-relaxed" style={{ fontSize: '0.875rem', marginBottom: '1.5rem' }}>{project.desc}</p>
-                <div className="flex flex-wrap" style={{ gap: '0.5rem' }}>
+                <div className="flex flex-wrap" style={{ gap: '0.5rem', marginBottom: '1.5rem' }}>
                   {project.tags.map(tag => (
                     <span key={tag} className="glass rounded-full font-semibold"
                       style={{ color: project.color, borderColor: `${project.color}30`, border: '1px solid', padding: '0.375rem 0.875rem', fontSize: '0.75rem' }}>
@@ -119,6 +119,11 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
+                <a href={project.demo} target="_blank" rel="noopener noreferrer"
+                  className="btn-shimmer inline-flex items-center justify-center font-semibold rounded-full transition-all duration-300 hover:scale-105"
+                  style={{ gap: '0.5rem', padding: '0.625rem 1.5rem', fontSize: '0.875rem', color: project.color, border: `1px solid ${project.color}50`, background: `${project.color}10`, boxShadow: `0 0 12px ${project.color}20` }}>
+                  🚀 Live Demo
+                </a>
               </div>
 
               <div className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
