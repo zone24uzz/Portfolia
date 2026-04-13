@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback, memo } from 'react';
+import { FaCode, FaArrowRight } from 'react-icons/fa';
+import { SiReact, SiTailwindcss, SiJavascript } from 'react-icons/si';
 
 const roles = ['Frontend Developer', 'React Specialist', 'UI/UX Enthusiast', 'Creative Coder'];
 
@@ -73,13 +75,10 @@ export default function Hero() {
 
             <div className="animate-fadeInUp opacity-0 delay-500 flex flex-wrap justify-center md:justify-start gap-3 pt-1">
               <button onClick={() => scrollTo('projects')}
-                className="btn-shimmer group text-white font-bold rounded-full transition-all duration-300 hover:scale-105 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base"
-                style={{
-                  background: 'linear-gradient(135deg, #00d4ff, #7c3aed)',
-                  boxShadow: '0 0 30px rgba(0,212,255,0.3)',
-                }}>
+                className="btn-shimmer group inline-flex items-center gap-2 text-white font-bold rounded-full transition-all duration-300 hover:scale-105 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base"
+                style={{ background: 'linear-gradient(135deg, #00d4ff, #7c3aed)', boxShadow: '0 0 30px rgba(0,212,255,0.3)' }}>
                 View Projects
-                <span className="ml-2 group-hover:translate-x-1 inline-block transition-transform duration-300">→</span>
+                <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
               </button>
               <button onClick={() => scrollTo('contact')}
                 className="btn-shimmer text-slate-300 border border-white/20 rounded-full font-bold hover:text-white hover:border-cyan-500/60 hover:bg-white/5 transition-all duration-300 hover:scale-105 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base">
@@ -103,14 +102,20 @@ export default function Hero() {
               </div>
               <div className="relative rounded-full glass border border-white/10 flex items-center justify-center animate-float"
                 style={{ width: 'clamp(14rem, 40vw, 20rem)', height: 'clamp(14rem, 40vw, 20rem)', boxShadow: '0 0 60px rgba(0,212,255,0.15), 0 0 120px rgba(124,58,237,0.1)' }}>
-                <div style={{ fontSize: 'clamp(3.5rem, 10vw, 6rem)' }} className="select-none">👨‍💻</div>
+                <FaCode style={{ fontSize: 'clamp(3.5rem, 10vw, 6rem)' }} className="text-cyan-400 select-none" />
               </div>
-              <div className="absolute glass border border-cyan-500/20 rounded-2xl text-cyan-400 font-semibold animate-float hidden sm:block"
-                style={{ top: '-1rem', right: '-1rem', padding: '0.5rem 0.75rem', fontSize: '0.75rem', animationDelay: '1s' }}>React ⚛️</div>
-              <div className="absolute glass border border-white/10 rounded-2xl text-slate-300 font-semibold animate-float hidden sm:block"
-                style={{ top: '50%', right: '-2.5rem', padding: '0.5rem 0.75rem', fontSize: '0.75rem', animationDelay: '0.5s' }}>Tailwind 🎨</div>
-              <div className="absolute glass border border-yellow-500/20 rounded-2xl text-yellow-400 font-semibold animate-float hidden sm:block"
-                style={{ bottom: '-1rem', left: '-1rem', padding: '0.5rem 0.75rem', fontSize: '0.75rem', animationDelay: '2s' }}>JavaScript 🟡</div>
+              <div className="absolute glass border border-cyan-500/20 rounded-2xl text-cyan-400 font-semibold animate-float hidden sm:flex items-center gap-1.5"
+                style={{ top: '-1rem', right: '-1rem', padding: '0.5rem 0.75rem', fontSize: '0.75rem', animationDelay: '1s' }}>
+                <SiReact className="text-cyan-400" /> React
+              </div>
+              <div className="absolute glass border border-white/10 rounded-2xl text-slate-300 font-semibold animate-float hidden sm:flex items-center gap-1.5"
+                style={{ top: '50%', right: '-2.5rem', padding: '0.5rem 0.75rem', fontSize: '0.75rem', animationDelay: '0.5s' }}>
+                <SiTailwindcss className="text-sky-400" /> Tailwind
+              </div>
+              <div className="absolute glass border border-yellow-500/20 rounded-2xl text-yellow-400 font-semibold animate-float hidden sm:flex items-center gap-1.5"
+                style={{ bottom: '-1rem', left: '-1rem', padding: '0.5rem 0.75rem', fontSize: '0.75rem', animationDelay: '2s' }}>
+                <SiJavascript className="text-yellow-400" /> JavaScript
+              </div>
             </div>
           </div>
 

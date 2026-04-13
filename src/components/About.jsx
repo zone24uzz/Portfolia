@@ -1,14 +1,22 @@
 import { useReveal } from '../hooks/useReveal';
+import { FaReact, FaNodeJs, FaGitAlt, FaFigma, FaMapMarkerAlt, FaBriefcase, FaGraduationCap } from 'react-icons/fa';
+import { SiJavascript, SiTailwindcss, SiNextdotjs, SiCss3 } from 'react-icons/si';
 
 const techStack = [
-  { name: 'React', icon: '⚛️', color: '#61dafb' },
-  { name: 'JavaScript', icon: '🟡', color: '#f7df1e' },
-  { name: 'Tailwind CSS', icon: '🎨', color: '#38bdf8' },
-  { name: 'Next.js', icon: '▲', color: '#ffffff' },
-  { name: 'Node.js', icon: '🟢', color: '#68a063' },
-  { name: 'Git', icon: '🔀', color: '#f05032' },
-  { name: 'CSS / SCSS', icon: '💅', color: '#cc6699' },
-  { name: 'Figma', icon: '🎭', color: '#a259ff' },
+  { name: 'React',       Icon: FaReact,       color: '#61dafb' },
+  { name: 'JavaScript',  Icon: SiJavascript,  color: '#f7df1e' },
+  { name: 'Tailwind CSS',Icon: SiTailwindcss, color: '#38bdf8' },
+  { name: 'Next.js',     Icon: SiNextdotjs,   color: '#ffffff' },
+  { name: 'Node.js',     Icon: FaNodeJs,      color: '#68a063' },
+  { name: 'Git',         Icon: FaGitAlt,      color: '#f05032' },
+  { name: 'CSS / SCSS',  Icon: SiCss3,        color: '#cc6699' },
+  { name: 'Figma',       Icon: FaFigma,       color: '#a259ff' },
+];
+
+const badges = [
+  { Icon: FaMapMarkerAlt, text: 'Remote / Worldwide' },
+  { Icon: FaBriefcase,    text: 'Open to opportunities' },
+  { Icon: FaGraduationCap,text: 'CS Graduate' },
 ];
 
 export default function About() {
@@ -47,9 +55,9 @@ export default function About() {
                 or experimenting with creative animations and micro-interactions.
               </p>
               <div className="flex flex-wrap gap-2 sm:gap-3">
-                {[['📍', 'Remote / Worldwide'], ['💼', 'Open to opportunities'], ['🎓', 'CS Graduate']].map(([icon, text]) => (
+                {badges.map(({ Icon, text }) => (
                   <span key={text} className="flex items-center gap-2 glass border border-white/8 text-xs sm:text-sm text-slate-400 rounded-full px-3 py-2">
-                    <span>{icon}</span> {text}
+                    <Icon className="text-cyan-400 shrink-0" /> {text}
                   </span>
                 ))}
               </div>
@@ -60,14 +68,14 @@ export default function About() {
           <div className="reveal">
             <h3 className="font-semibold text-slate-300 text-base sm:text-lg mb-4">Tech Stack</h3>
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
-              {techStack.map((tech, i) => (
-                <div key={tech.name} data-hover
+              {techStack.map(({ name, Icon, color }, i) => (
+                <div key={name} data-hover
                   className="group glass border border-white/5 rounded-2xl flex items-center gap-3 hover:border-white/15 transition-all duration-300 hover:scale-105 cursor-default px-3 py-3 sm:px-4"
                   style={{ transitionDelay: `${i * 40}ms` }}>
-                  <span className="text-xl sm:text-2xl">{tech.icon}</span>
-                  <span className="font-medium text-slate-300 group-hover:text-white transition-colors text-xs sm:text-sm">{tech.name}</span>
+                  <Icon className="text-xl sm:text-2xl shrink-0" style={{ color }} />
+                  <span className="font-medium text-slate-300 group-hover:text-white transition-colors text-xs sm:text-sm">{name}</span>
                   <div className="ml-auto w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0"
-                    style={{ background: tech.color, boxShadow: `0 0 8px ${tech.color}` }} />
+                    style={{ background: color, boxShadow: `0 0 8px ${color}` }} />
                 </div>
               ))}
             </div>

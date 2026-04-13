@@ -1,11 +1,12 @@
 import { useReveal } from '../hooks/useReveal';
+import { FaRocket, FaExclamationTriangle, FaBuilding, FaPlay, FaUtensils, FaShoppingCart } from 'react-icons/fa';
 
 const projects = [
   {
     title: 'Nexcent',
     desc: 'Корпоративный сайт для частной компании. Современный дизайн, чистая вёрстка и плавные анимации.',
     tags: ['HTML', 'CSS', 'JavaScript'],
-    color: '#00d4ff', emoji: '🏢',
+    color: '#00d4ff', Icon: FaBuilding,
     gradient: 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(21,93,252,0.15))',
     demo: 'https://nexcent-ten-pi.vercel.app/',
     note: 'Нет респонсива для телефонов',
@@ -14,7 +15,7 @@ const projects = [
     title: 'View-Tube',
     desc: 'Клон YouTube с поиском видео, карточками каналов и адаптивным интерфейсом в стиле оригинала.',
     tags: ['React', 'YouTube API', 'CSS'],
-    color: '#f43f5e', emoji: '▶️',
+    color: '#f43f5e', Icon: FaPlay,
     gradient: 'linear-gradient(135deg, rgba(244,63,94,0.15), rgba(220,38,38,0.15))',
     demo: 'https://you-tube-lime.vercel.app/',
     note: 'Нет респонсива для телефонов',
@@ -23,7 +24,7 @@ const projects = [
     title: 'Foodi',
     desc: 'Лендинг для ресторана с меню, акциями и формой бронирования. Аппетитный дизайн и анимации.',
     tags: ['React', 'Tailwind', 'JavaScript'],
-    color: '#f59e0b', emoji: '🍔',
+    color: '#f59e0b', Icon: FaUtensils,
     gradient: 'linear-gradient(135deg, rgba(245,158,11,0.15), rgba(234,88,12,0.15))',
     demo: 'https://foodi-lemon-one.vercel.app/',
     note: 'Нет респонсива для телефонов',
@@ -32,7 +33,7 @@ const projects = [
     title: 'Mars Market',
     desc: 'Полноценный E-Commerce магазин с каталогом товаров, корзиной и оформлением заказа.',
     tags: ['React', 'Redux', 'Tailwind'],
-    color: '#10b981', emoji: '🛒',
+    color: '#10b981', Icon: FaShoppingCart,
     gradient: 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,150,105,0.15))',
     demo: 'https://mars-market-ashen.vercel.app/',
     note: 'Нет респонсива для телефонов',
@@ -72,17 +73,19 @@ export default function Projects() {
                     backgroundImage: `linear-gradient(${project.color}20 1px, transparent 1px), linear-gradient(90deg, ${project.color}20 1px, transparent 1px)`,
                     backgroundSize: '30px 30px'
                   }} />
-                <span className="relative z-10 group-hover:scale-110 transition-transform duration-500 select-none"
-                  style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>{project.emoji}</span>
+                <project.Icon
+                  className="relative z-10 group-hover:scale-110 transition-transform duration-500 select-none"
+                  style={{ fontSize: 'clamp(3rem, 8vw, 5rem)', color: project.color }}
+                />
 
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-400 flex flex-col items-center justify-center gap-3">
                   <a href={project.demo} target="_blank" rel="noopener noreferrer"
-                    className="btn-shimmer flex items-center gap-2 text-white font-semibold rounded-full transition-all duration-300 hover:scale-105 px-6 py-3 text-sm"
+                    className="btn-shimmer inline-flex items-center gap-2 text-white font-semibold rounded-full transition-all duration-300 hover:scale-105 px-6 py-3 text-sm"
                     style={{ background: `linear-gradient(135deg, ${project.color}, ${project.color}99)`, boxShadow: `0 0 20px ${project.color}40` }}>
-                    🚀 Live Demo
+                    <FaRocket /> Live Demo
                   </a>
-                  <span className="text-white/40 tracking-wide" style={{ fontSize: '0.7rem' }}>
-                    ⚠️ {project.note}
+                  <span className="inline-flex items-center gap-1.5 text-white/40 tracking-wide" style={{ fontSize: '0.7rem' }}>
+                    <FaExclamationTriangle /> {project.note}
                   </span>
                 </div>
               </div>
@@ -102,7 +105,7 @@ export default function Projects() {
                 <a href={project.demo} target="_blank" rel="noopener noreferrer"
                   className="btn-shimmer inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-300 hover:scale-105 px-5 py-2.5 text-sm"
                   style={{ color: project.color, border: `1px solid ${project.color}50`, background: `${project.color}10`, boxShadow: `0 0 12px ${project.color}20` }}>
-                  🚀 Live Demo
+                  <FaRocket /> Live Demo
                 </a>
               </div>
 

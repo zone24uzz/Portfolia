@@ -1,5 +1,13 @@
 import { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import { FaEnvelope, FaLinkedin, FaGithub, FaGlobe, FaCheckCircle } from 'react-icons/fa';
+
+const contactItems = [
+  { Icon: FaEnvelope,  label: 'Email',    value: 'komron@example.com',    color: '#00d4ff' },
+  { Icon: FaLinkedin,  label: 'LinkedIn', value: 'linkedin.com/in/komron', color: '#0a66c2' },
+  { Icon: FaGithub,    label: 'GitHub',   value: 'github.com/komron',      color: '#ffffff' },
+  { Icon: FaGlobe,     label: 'Location', value: 'Remote / Worldwide',     color: '#10b981' },
+];
 
 export default function Contact() {
   const sectionRef = useReveal();
@@ -55,19 +63,14 @@ export default function Contact() {
             <div className="glass border border-white/5 rounded-3xl p-6 sm:p-10">
               <h3 className="font-bold text-white text-lg sm:text-xl mb-6">Contact Info</h3>
               <div className="flex flex-col gap-5">
-                {[
-                  { icon: '📧', label: 'Email', value: 'komron@example.com' },
-                  { icon: '💼', label: 'LinkedIn', value: 'linkedin.com/in/komron' },
-                  { icon: '🐙', label: 'GitHub', value: 'github.com/komron' },
-                  { icon: '🌍', label: 'Location', value: 'Remote / Worldwide' },
-                ].map(item => (
-                  <div key={item.label} className="group flex items-center gap-4">
-                    <div className="glass border border-white/5 rounded-2xl flex items-center justify-center group-hover:border-white/15 transition-all duration-300 shrink-0 w-11 h-11 text-xl">
-                      {item.icon}
+                {contactItems.map(({ Icon, label, value, color }) => (
+                  <div key={label} className="group flex items-center gap-4">
+                    <div className="glass border border-white/5 rounded-2xl flex items-center justify-center group-hover:border-white/15 transition-all duration-300 shrink-0 w-11 h-11">
+                      <Icon className="text-lg" style={{ color }} />
                     </div>
                     <div>
-                      <div className="text-slate-600 uppercase tracking-wider font-medium mb-0.5" style={{ fontSize: '0.7rem' }}>{item.label}</div>
-                      <div className="text-slate-300 group-hover:text-white transition-colors duration-300 text-sm">{item.value}</div>
+                      <div className="text-slate-600 uppercase tracking-wider font-medium mb-0.5" style={{ fontSize: '0.7rem' }}>{label}</div>
+                      <div className="text-slate-300 group-hover:text-white transition-colors duration-300 text-sm">{value}</div>
                     </div>
                   </div>
                 ))}
@@ -88,7 +91,7 @@ export default function Contact() {
           <div className="reveal">
             <form onSubmit={handleSubmit} className="glass border border-white/5 rounded-3xl p-6 sm:p-10 flex flex-col gap-5">
               {[
-                { key: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
+                { key: 'name',  label: 'Name',  type: 'text',  placeholder: 'Your name' },
                 { key: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
               ].map(({ key, label, type, placeholder }) => (
                 <div key={key} className="flex flex-col gap-1.5">
@@ -119,7 +122,9 @@ export default function Contact() {
                     Sending...
                   </span>
                 ) : sent ? (
-                  <span className="flex items-center justify-center gap-2">✅ Message Sent!</span>
+                  <span className="flex items-center justify-center gap-2">
+                    <FaCheckCircle /> Message Sent!
+                  </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">Send Message →</span>
                 )}
