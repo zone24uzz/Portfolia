@@ -1,104 +1,102 @@
 import { useEffect, useRef } from 'react';
 
+// Don't render custom cursor on touch devices
+const isTouch = () => window.matchMedia('(pointer: coarse)').matches;
+
 export default function Cursor() {
   const diamondRef = useRef(null);
   const trailsRef = useRef([]);
-  const posRef = useRef({ x: 0, y: 0 });
-  const smoothRef = useRef({ x: 0, y: 0 });
+  const posRef = useRef({ x: -100, y: -100 });
+  const smoothRef = useRef({ x: -100, y: -100 });
   const rafRef = useRef(null);
-  const isHoverRef = useRef(false);
+  const visibleRef = useRef(false);
 
   useEffect(() => {
+    if (isTouch()) return; // skip on mobile/tablet touch screens
+
     const diamond = diamondRef.current;
     const trails = trailsRef.current;
 
-    // Trail positions ring buffer
-    const history = Array(8).fill({ x: 0, y: 0 });
+    // Ring buffer for trail history
+    const HIST = 8;
+    const history = new Array(HIST).fill(null).map(() => ({ x: -100, y: -100 }));
     let histIdx = 0;
 
     const onMouseMove = (e) => {
-      posRef.current = { x: e.clientX, y: e.clientY };
+      posRef.current.x = e.clientX;
+      posRef.current.y = e.clientY;
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        diamond.style.opacity = '1';
+      }
     };
 
-    const onMouseEnter = () => {
-      isHoverRef.current = true;
-      diamond.classList.add('cursor-hover');
+    // Use event delegation instead of binding to every element
+    const onMouseOver = (e) => {
+      if (e.target.closest('a, button, [data-hover]')) {
+        diamond.classList.add('cursor-hover');
+      }
+    };
+    const onMouseOut = (e) => {
+      if (e.target.closest('a, button, [data-hover]')) {
+        diamond.classList.remove('cursor-hover');
+      }
     };
 
-    const onMouseLeave = () => {
-      isHoverRef.current = false;
-      diamond.classList.remove('cursor-hover');
-    };
-
-    const bindInteractables = () => {
-      document.querySelectorAll('a, button, [data-hover]').forEach(el => {
-        el.addEventListener('mouseenter', onMouseEnter);
-        el.addEventListener('mouseleave', onMouseLeave);
-      });
-    };
-
-    bindInteractables();
-
-    // Re-bind on DOM changes (dynamic elements)
-    const mo = new MutationObserver(bindInteractables);
-    mo.observe(document.body, { childList: true, subtree: true });
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseover', onMouseOver, { passive: true });
+    document.addEventListener('mouseout', onMouseOut, { passive: true });
 
     const animate = () => {
-      const ease = 0.14;
+      const ease = 0.13;
       smoothRef.current.x += (posRef.current.x - smoothRef.current.x) * ease;
       smoothRef.current.y += (posRef.current.y - smoothRef.current.y) * ease;
 
       const sx = smoothRef.current.x;
       const sy = smoothRef.current.y;
 
-      // Main diamond
-      diamond.style.left = sx + 'px';
-      diamond.style.top = sy + 'px';
+      diamond.style.transform = `translate(${sx}px, ${sy}px) translate(-50%, -50%) rotate(45deg)`;
 
-      // Record history for trails
-      history[histIdx % history.length] = { x: sx, y: sy };
+      history[histIdx % HIST] = { x: sx, y: sy };
       histIdx++;
 
-      // Position each trail dot with staggered history
-      trails.forEach((t, i) => {
-        if (!t) return;
-        const step = Math.floor((i + 1) * (history.length / trails.length));
-        const past = history[(histIdx - step + history.length * 10) % history.length];
-        t.style.left = past.x + 'px';
-        t.style.top = past.y + 'px';
+      for (let i = 0; i < trails.length; i++) {
+        const t = trails[i];
+        if (!t) continue;
+        const step = Math.floor((i + 1) * (HIST / trails.length));
+        const past = history[(histIdx - step + HIST * 10) % HIST];
         const scale = 1 - (i + 1) * 0.12;
-        const opacity = 0.55 - i * 0.07;
-        t.style.transform = `translate(-50%, -50%) rotate(45deg) scale(${scale})`;
+        const opacity = 0.5 - i * 0.07;
+        t.style.transform = `translate(${past.x}px, ${past.y}px) translate(-50%, -50%) rotate(45deg) scale(${scale})`;
         t.style.opacity = opacity;
-      });
+      }
 
       rafRef.current = requestAnimationFrame(animate);
     };
 
-    document.addEventListener('mousemove', onMouseMove);
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseover', onMouseOver);
+      document.removeEventListener('mouseout', onMouseOut);
       cancelAnimationFrame(rafRef.current);
-      mo.disconnect();
     };
   }, []);
 
+  if (isTouch()) return null;
+
   return (
     <>
-      {/* Trail dots */}
-      {Array.from({ length: 6 }).map((_, i) => (
+      {Array.from({ length: 6 }, (_, i) => (
         <div
           key={i}
-          ref={el => trailsRef.current[i] = el}
+          ref={el => { trailsRef.current[i] = el; }}
           className="cursor-trail"
-          style={{ zIndex: 9997 - i }}
+          style={{ zIndex: 9997 - i, opacity: 0 }}
         />
       ))}
-
-      {/* Main diamond */}
-      <div ref={diamondRef} className="cursor-diamond" />
+      <div ref={diamondRef} className="cursor-diamond" style={{ opacity: 0 }} />
     </>
   );
 }
